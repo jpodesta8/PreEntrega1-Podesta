@@ -20,7 +20,7 @@ const Navbar = () => {
         The Art Gallery
       </Center>
 
-      <Divider orientation='horizontal' colorScheme='blackAlpha'/>
+      <Divider orientation='horizontal'/>
 
       <Flex>
         <Center p='2' >
