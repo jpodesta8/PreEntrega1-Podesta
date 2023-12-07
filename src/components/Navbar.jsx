@@ -2,53 +2,53 @@ import React from 'react'
 import {
   Flex,
   Spacer,
-  Box,
   Center,
-  Circle,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  Divider
+  Divider,
+  Button
 } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import CartWidget from './CartWidget'
+
+//COMPONENTE CONTENEDOR
 
 const Navbar = () => {
   return (
-    <div>
+    <div align='center'>
       <Center fontSize='5xl' p='4' as='i'>
         The Art Gallery
       </Center>
 
-      <Divider orientation='horizontal'/>
+      <Divider orientation='horizontal' />
 
       <Flex>
         <Center p='2' >
-          Inicio
+          <Button variant='outline' >Inicio</Button>
         </Center>
 
         <Spacer />
 
-        <Menu p='2'>
-          <MenuButton>Categorias</MenuButton>
-          <MenuList>
-            <MenuItem>Stickers</MenuItem>
-            <MenuItem>Fotografia</MenuItem>
-            <MenuItem>Escultura</MenuItem>
-            <MenuItem>Dibujo</MenuItem>
-          </MenuList>
-        </Menu>
+        <Center>
+          <Menu p='2'>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+              Categorias
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Stickers</MenuItem>
+              <MenuItem>Fotografia</MenuItem>
+              <MenuItem>Escultura</MenuItem>
+              <MenuItem>Dibujo</MenuItem>
+            </MenuList>
+          </Menu>
+        </Center>
 
         <Spacer />
 
-        <Flex p='2'>
-          <Center p='2' fontWeight='bold' fontSize='xs'>
-            <Circle as='span' color="white" bg='red' w='18px' h='18px'>  4  </Circle>
-          </Center>
-          <Box>
-            <CartWidget />
-          </Box>
-        </Flex>
+        <CartWidget />
+
       </Flex>
       <Divider orientation='horizontal' />
     </div>

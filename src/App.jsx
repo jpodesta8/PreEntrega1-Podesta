@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import React from 'react'
 import Navbar from './components/Navbar.jsx'
 import ItemListContainer from './components/ItemListContainer.jsx'
-import ItemCount from './components/ItemCount.jsx'
+
+// COMPONENTE CONTENEDOR
 
 function App() {
 
   return (
     <>
       <Navbar/>
-      <ItemListContainer greeting={'Bienvenidos a mi ecommerce'}/>
+      <ItemListContainer/> 
     </>
   )
 }
