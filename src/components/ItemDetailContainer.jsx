@@ -14,8 +14,6 @@ const ItemDetailContainer = () => {
     })
   }, [id])
 
-  console.log(id)
-
   return (
     <div>
       {item && <ItemDetail item = {item} />}

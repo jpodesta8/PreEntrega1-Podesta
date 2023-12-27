@@ -21,7 +21,7 @@ import { getCategories } from '../apis/fake-store.js'
 
 const Navbar = () => {
 
-  const [categories, setCategories] = useState(null);
+  const [categories, setCategories] = useState();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -29,8 +29,6 @@ const Navbar = () => {
       setCategories(categories);
     }
     fetchCategories();
-
-    console.log(categories);
   }, [])
 
   return (
