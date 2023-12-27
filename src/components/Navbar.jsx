@@ -9,24 +9,46 @@ import {
   MenuItem,
   Divider,
   Button
+
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import CartWidget from './CartWidget'
+import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import CartWidget from './CartWidget.jsx'
+import { getCategories } from '../apis/fake-store.js'
 
 //COMPONENTE CONTENEDOR
 
 const Navbar = () => {
+
+  const [categories, setCategories] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categories = await getCategories();
+      setCategories(categories);
+    }
+    fetchCategories();
+
+    console.log(categories);
+  }, [])
+
   return (
     <div align='center'>
-      <Center fontSize='5xl' p='4' as='i'>
-        The Art Gallery
-      </Center>
+      <Link to='/'>
+        <Center fontSize='5xl' p='4' as='i'>
+          The Art Gallery
+        </Center>
+      </Link>
+
 
       <Divider orientation='horizontal' />
 
       <Flex>
         <Center p='2' >
-          <Button variant='outline' >Inicio</Button>
+          <Link to="/">
+            <Button variant='outline' >Inicio</Button>
+          </Link>
         </Center>
 
         <Spacer />
@@ -37,10 +59,15 @@ const Navbar = () => {
               Categorias
             </MenuButton>
             <MenuList>
-              <MenuItem>Stickers</MenuItem>
-              <MenuItem>Fotografia</MenuItem>
-              <MenuItem>Escultura</MenuItem>
-              <MenuItem>Dibujo</MenuItem>
+              {
+                categories && categories.map((category) => {
+                  return(
+                    <Link to={`category/${category}`} key={category}><MenuItem>{category}</MenuItem></Link>
+                  )
+                })
+              }
+              
+              
             </MenuList>
           </Menu>
         </Center>
@@ -48,6 +75,7 @@ const Navbar = () => {
         <Spacer />
 
         <CartWidget />
+
 
       </Flex>
       <Divider orientation='horizontal' />

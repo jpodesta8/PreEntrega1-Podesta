@@ -1,40 +1,33 @@
 import React from 'react'
-import ItemList from './ItemList'
-import { HStack, VStack } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import ItemList from './ItemList.jsx'
+import { getProducts } from '../apis/fake-store.js'
+import { useParams } from 'react-router-dom'
 
 // COMPONENTE CONTENEDOR
 
 const ItemListContainer = () => {
 
-  const productos = [
-    { nombre: "Producto1", descripcion: "descripcion producto 1", precio: "3000" },
-    { nombre: "Producto2", descripcion: "descripcion producto 2", precio: "1000" },
-    { nombre: "Producto3", descripcion: "descripcion producto 3", precio: "50000" }
-  ]
+  const [productos, setProducts] = useState([])
+  const { categoryId } = useParams()
 
-  const mostrarProductos = new Promise((resolve, reject) => {
-    if (productos.length > 0) {
-      setTimeout(() => {
-        resolve(productos)
-      }, 2000)
-    } else {
-      reject("No se obtuvieron productos")
-    }
-  })
-
-  mostrarProductos
-    .then((resultado) => {
-      console.log(resultado)
+  useEffect(() => {
+    getProducts().then((products) => {
+      if (categoryId) {
+        setProducts(products.filter((p) => p.category === categoryId))
+        console.log(categoryId)
+      } else {
+        setProducts(products)
+      }
     })
-    .catch((error) => {
-      console.log(error)
-    })
+  }, [categoryId])
 
   return (
     <div>
-        <ItemList
-          productos={productos}
-        />
+
+      <ItemList
+        productos={productos}
+      />
     </div>
   )
 }
