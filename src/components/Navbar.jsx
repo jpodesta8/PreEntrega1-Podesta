@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import CartWidget from './CartWidget.jsx'
 import { getCategories } from '../apis/fake-store.js'
+import CartContext from '../context/CartContext.jsx'
 
 //COMPONENTE CONTENEDOR
 
@@ -39,7 +40,6 @@ const Navbar = () => {
         </Center>
       </Link>
 
-
       <Divider orientation='horizontal' />
 
       <Flex>
@@ -59,21 +59,22 @@ const Navbar = () => {
             <MenuList>
               {
                 categories && categories.map((category) => {
-                  return(
+                  return (
                     <Link to={`category/${category}`} key={category}><MenuItem>{category}</MenuItem></Link>
                   )
                 })
               }
-              
-              
+
+
             </MenuList>
           </Menu>
         </Center>
 
         <Spacer />
 
-        <CartWidget />
-
+        <CartContext >
+          <CartWidget />
+        </CartContext>
 
       </Flex>
       <Divider orientation='horizontal' />

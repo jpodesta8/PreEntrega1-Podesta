@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import ItemList from './ItemList.jsx'
-import { getProductByCategoryId, getProducts } from '../apis/fake-store.js'
+import { getProducts } from '../apis/fake-store.js'
 import { useParams } from 'react-router-dom'
 
 // COMPONENTE CONTENEDOR
