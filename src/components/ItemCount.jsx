@@ -36,7 +36,7 @@ const ItemCount = ({ item }) => {
           </Button>
         </Stack>
         <Stack>
-          <Button onClick={() => agregarProducto(item, contador)} colorScheme='teal' size='md'>
+          <Button onClick={() => agregarProducto(item, contador, setContador)} colorScheme='teal' size='md'>
             Agregar al carrito
           </Button>
         </Stack>

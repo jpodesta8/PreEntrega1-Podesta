@@ -1,4 +1,5 @@
 import { createContext, useState } from "react"
+import { Alert, AlertIcon } from '@chakra-ui/react'
 
 export const CartContext = createContext(null)
 
@@ -6,7 +7,7 @@ export const ShoppingCartProvider = ({ children }) => {
 
   const [cart, setCart] = useState([])
 
-  const agregarProducto = (item, contador) => {
+  const agregarProducto = (item, contador, setContador) => {
     if (contador == 1) {
       <Alert status='success' variant='solid'>
         <AlertIcon />
