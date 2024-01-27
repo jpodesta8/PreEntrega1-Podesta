@@ -4,13 +4,14 @@ import { Grid, GridItem } from '@chakra-ui/react'
 
 const ItemList = ({ productos }) => {
     return (
-        <Grid templateColumns='repeat(5, 1fr)' templateRows='repeat(5, 1fr)' gap={4}>
+        <Grid templateColumns='repeat(5, 2fr)' templateRows='repeat(5, 1fr)' gap={4} p='4'>
             {
                 productos.map((p) => {
                     return (
                         <GridItem key={p.id}>
                             <Item
                                 product={p}
+                                key={p.id}
                             />
                         </GridItem>
                     )
@@ -20,4 +21,4 @@ const ItemList = ({ productos }) => {
     )
 }
 
-export default ItemList
+export default React.memo(ItemList)

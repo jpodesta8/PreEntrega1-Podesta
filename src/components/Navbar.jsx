@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   Flex,
   Spacer,
@@ -9,28 +10,40 @@ import {
   MenuItem,
   Divider,
   Button
-
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import CartWidget from './CartWidget.jsx'
-import { getCategories } from '../apis/fake-store.js'
-import CartContext from '../context/CartContext.jsx'
+import { collection, getDocs, getFirestore } from "firebase/firestore"
 
-//COMPONENTE CONTENEDOR
 
 const Navbar = () => {
 
   const [categories, setCategories] = useState();
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const categories = await getCategories();
-      setCategories(categories);
-    }
-    fetchCategories();
+    const db = getFirestore()
+
+    const products = collection(db, "products")
+
+    getDocs(products)
+      .then((snapshot) => {
+        console.log(
+            snapshot.docs.map((doc) => {
+              return doc.data().category
+            })
+        )
+      })
+
+    // getDocs(getCategories).then((snapshot) => {
+    //   const docs = snapshot.docs.map((doc) => doc.data())
+
+    //   setCategories(docs)
+
+    // })
   }, [])
+
 
   return (
     <div align='center'>
@@ -72,9 +85,7 @@ const Navbar = () => {
 
         <Spacer />
 
-        <CartContext >
-          <CartWidget />
-        </CartContext>
+        <CartWidget />
 
       </Flex>
       <Divider orientation='horizontal' />

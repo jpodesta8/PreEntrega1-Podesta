@@ -1,16 +1,20 @@
 import React from 'react'
-import { useState } from 'react'
-import { Button, Stack, Text, VStack } from '@chakra-ui/react'
+import { useContext, useState } from 'react'
+import { Button, Center, Stack, Text, VStack, Alert, AlertIcon } from '@chakra-ui/react'
+import { CartContext } from '../context/ShoppingCartContext'
 
 // COMPONENTE DE PRESENTACION 
 
-const ItemCount = () => {
+const ItemCount = ({ item }) => {
 
   const [contador, setContador] = useState(0)
+
+  const { cart, setCart, agregarProducto } = useContext(CartContext)
 
   const sumar = () => {
     setContador(contador + 1)
   }
+
   const restar = () => {
     if (contador > 0) {
       setContador(contador - 1)
@@ -18,24 +22,27 @@ const ItemCount = () => {
   }
 
   return (
-    <VStack>
-      <Stack direction='row'>
-        <Button onClick={sumar} colorScheme='teal' size='sm' >
-          +
-        </Button>
-        <Text as='b' w='50px' align='center' border=''>
-          {contador}
-        </Text>
-        <Button onClick={restar} colorScheme='teal' size='sm'>
-          -
-        </Button>
-      </Stack>
-      <Stack>
-        <Button>
-          Agregar al carrito
-        </Button>
-      </Stack>
-    </VStack>
+    <Center>
+      <VStack>
+        <Stack direction='row'>
+          <Button onClick={sumar} colorScheme='gray' size='sm' >
+            +
+          </Button>
+          <Text as='b' w='50px' align='center'>
+            {contador}
+          </Text>
+          <Button onClick={restar} colorScheme='gray' size='sm'>
+            -
+          </Button>
+        </Stack>
+        <Stack>
+          <Button onClick={() => agregarProducto(item, contador)} colorScheme='teal' size='md'>
+            Agregar al carrito
+          </Button>
+        </Stack>
+      </VStack>
+    </Center>
+
   )
 }
 

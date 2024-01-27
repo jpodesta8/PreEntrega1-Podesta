@@ -1,11 +1,15 @@
-import React, { useContext } from 'react'
-import { CartContext } from '../context/CartContext'
+import React from 'react'
+import { useContext } from 'react'
+import { CartContext } from '../context/ShoppingCartContext'
 
 const Cart = () => {
 
-  const { comision } = useContext (CartContext)
+  const { cart } = useContext (CartContext)
+
+  console.log(cart)
+
   return (
-    <div>{comision}</div>
+    <div>cart</div>
   )
 }
 

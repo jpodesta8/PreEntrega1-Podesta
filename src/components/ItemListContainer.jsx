@@ -1,29 +1,43 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import ItemList from './ItemList.jsx'
-import { getProducts } from '../apis/fake-store.js'
 import { useParams } from 'react-router-dom'
-
-// COMPONENTE CONTENEDOR
+import Loader from './Loader.jsx'
+import { collection, getDocs, getFirestore, query } from "firebase/firestore"
 
 const ItemListContainer = () => {
 
   const { categoryId } = useParams()
   const [productos, setProducts] = useState([])
-
-  console.log(categoryId)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getProducts().then((products) => {
-      if (categoryId) {
-        setProducts(products.filter((p) => p.category === categoryId))
-      } else {
-        setProducts(products)
-      }
-    })
+    const db = getFirestore()
+
+    const itemsCollection = collection(db, "products")
+
+    const q = categoryId ? query(itemsCollection, where("category", "==", categoryId)) : itemsCollection
+
+    setLoading(true)
+
+    setTimeout(() => {
+      getDocs(q)
+        .then((snapshot) => {
+
+          setProducts(
+            snapshot.docs.map((doc) => {
+              return {...doc.data(), id: doc.id}
+            })
+          )
+        })
+      setLoading(false)
+    }, 3000)
+
   }, [categoryId])
 
-
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div>
