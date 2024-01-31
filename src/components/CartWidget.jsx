@@ -11,15 +11,13 @@ import { useContext } from 'react'
 
 const CartWidget = () => {
 
-  const { cart } = useContext (CartContext)
-
-  // console.log(cart)
+  const { cantidadEnCarrito } = useContext (CartContext)
 
   return (
     <div>
       <Stack direction='row' p='2'>
         <Center fontWeight='bold' fontSize='xs'>
-          <Circle as='span' color="white" bg='red' w='18px' h='18px'>  0  </Circle>
+          <Circle as='span' color="white" bg='red' w='18px' h='18px'>  {cantidadEnCarrito()}  </Circle>
         </Center>
         <Link to='/cart'>
           <IconButton

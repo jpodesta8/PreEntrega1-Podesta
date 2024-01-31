@@ -8,28 +8,28 @@ export const ShoppingCartProvider = ({ children }) => {
   const [cart, setCart] = useState([])
 
   const agregarProducto = (item, contador, setContador) => {
-    if (contador == 1) {
-      <Alert status='success' variant='solid'>
-        <AlertIcon />
-        Se agregó {contador} producto al carrito!
-      </Alert>
-    }
-    else if (contador > 1) {
-      <Alert status='success' variant='solid'>
-        <AlertIcon />
-        Se agregaron {contador} productos al carrito!
-      </Alert>
+
+    const itemAgregado = { ...item, cantidad: contador }
+
+    const carritoNuevo = [...cart]
+    const itemEnElCarrito = carritoNuevo.find((producto) => producto.id === itemAgregado.id)
+
+    if (itemEnElCarrito) {
+      itemEnElCarrito.cantidad = itemEnElCarrito.cantidad + contador
+      setCart(carritoNuevo)
+    } else {
+      setCart([...cart, itemAgregado])
     }
 
-    if (contador > 0) {
-      cart.push({ item })
-    }
+    setContador(1)
+  }
 
-    setContador(0)
+  const cantidadEnCarrito = () => {
+    return cart.reduce((acc, producto) => acc + producto.cantidad, 0)
   }
 
   return (
-    <CartContext.Provider value={{ cart, setCart, agregarProducto}}>
+    <CartContext.Provider value={{ cart, setCart, agregarProducto, cantidadEnCarrito }}>
       {children}
     </CartContext.Provider>
   )

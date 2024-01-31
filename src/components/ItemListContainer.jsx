@@ -3,36 +3,45 @@ import { useState, useEffect } from 'react'
 import ItemList from './ItemList.jsx'
 import { useParams } from 'react-router-dom'
 import Loader from './Loader.jsx'
-import { collection, getDocs, getFirestore, query } from "firebase/firestore"
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore"
 
 const ItemListContainer = () => {
 
   const { categoryId } = useParams()
-  const [productos, setProducts] = useState([])
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const db = getFirestore()
 
-    const itemsCollection = collection(db, "products")
+    const fetchProducts = async () => {
 
-    const q = categoryId ? query(itemsCollection, where("category", "==", categoryId)) : itemsCollection
+      const db = getFirestore()
 
-    setLoading(true)
+      const itemsCollection = collection(db, "products")
 
-    setTimeout(() => {
-      getDocs(q)
-        .then((snapshot) => {
+      const q =  categoryId ? query(itemsCollection, where("category", "==", categoryId)) : itemsCollection
 
-          setProducts(
-            snapshot.docs.map((doc) => {
-              return {...doc.data(), id: doc.id}
-            })
-          )
+      const itemsSnapshot = await getDocs(q)
+
+      const itemsList = []
+
+      setLoading(true)
+
+      setTimeout(() => {
+
+        itemsSnapshot.forEach((i) => {
+          const itemData = i.data()
+
+          itemsList.push({ ...itemData, id: i.id})
         })
-      setLoading(false)
-    }, 3000)
 
+        setProducts(itemsList)
+        setLoading(false)
+
+      }, 3000)
+    }
+
+    fetchProducts()
   }, [categoryId])
 
   if (loading) {
@@ -41,9 +50,8 @@ const ItemListContainer = () => {
 
   return (
     <div>
-
       <ItemList
-        productos={productos}
+        products={products}
       />
     </div>
   )

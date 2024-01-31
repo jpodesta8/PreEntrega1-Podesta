@@ -4,12 +4,25 @@ import { CartContext } from '../context/ShoppingCartContext'
 
 const Cart = () => {
 
-  const { cart } = useContext (CartContext)
+  const { cart } = useContext(CartContext)
 
-  console.log(cart)
+  // const precioTotal = () => {
+  //    CONSTRUIR FUNCION
+  // }
 
   return (
-    <div>cart</div>
+    <div>
+      <h1>CARRITO</h1>
+      {
+        cart.map((prod) => (
+          <div>
+            <h1>producto: {prod.title}</h1>
+            <p>cantidad: {prod.cantidad}</p>
+            <p>precio: ${prod.price}</p>
+          </div>
+        ))
+      }
+    </div>
   )
 }
 

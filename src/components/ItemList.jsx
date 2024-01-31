@@ -2,11 +2,12 @@ import React from 'react'
 import Item from './Item.jsx'
 import { Grid, GridItem } from '@chakra-ui/react'
 
-const ItemList = ({ productos }) => {
+const ItemList = ({ products }) => {
+
     return (
         <Grid templateColumns='repeat(5, 2fr)' templateRows='repeat(5, 1fr)' gap={4} p='4'>
             {
-                productos.map((p) => {
+                products.map((p) => {
                     return (
                         <GridItem key={p.id}>
                             <Item

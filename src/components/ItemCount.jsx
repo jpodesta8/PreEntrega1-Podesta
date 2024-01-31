@@ -7,16 +7,16 @@ import { CartContext } from '../context/ShoppingCartContext'
 
 const ItemCount = ({ item }) => {
 
-  const [contador, setContador] = useState(0)
+  const [contador, setContador] = useState(1)
 
-  const { cart, setCart, agregarProducto } = useContext(CartContext)
+  const { agregarProducto } = useContext(CartContext)
 
   const sumar = () => {
     setContador(contador + 1)
   }
 
   const restar = () => {
-    if (contador > 0) {
+    if (contador > 1) {
       setContador(contador - 1)
     }
   }

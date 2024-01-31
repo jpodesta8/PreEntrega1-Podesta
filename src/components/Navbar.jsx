@@ -20,30 +20,33 @@ import { collection, getDocs, getFirestore } from "firebase/firestore"
 
 const Navbar = () => {
 
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState([]);
+
 
   useEffect(() => {
-    const db = getFirestore()
+    const fetchCategories = async () => {
 
-    const products = collection(db, "products")
+      const db = getFirestore()
 
-    getDocs(products)
-      .then((snapshot) => {
-        console.log(
-            snapshot.docs.map((doc) => {
-              return doc.data().category
-            })
-        )
+      const products = collection(db, "products")
+
+      const productsSnapshot = await getDocs(products)
+
+      const categoriasEnLimpio = []
+
+      productsSnapshot.forEach((doc) => {
+
+        const productData = doc.data()
+
+        if (!categoriasEnLimpio.includes(productData.category)) {
+          categoriasEnLimpio.push(productData.category)
+        }
       })
+      setCategories(categoriasEnLimpio)
+    }
 
-    // getDocs(getCategories).then((snapshot) => {
-    //   const docs = snapshot.docs.map((doc) => doc.data())
-
-    //   setCategories(docs)
-
-    // })
+    fetchCategories()
   }, [])
-
 
   return (
     <div align='center'>
